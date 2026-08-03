@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import { projects } from "@/data/projects";
 
 const contact = {
   github: "https://github.com/shawntru04",
@@ -6,83 +8,7 @@ const contact = {
   email: "shawntru@umich.edu",
 };
 
-const projects = [
-  {
-    title: "Autonomous Guided Parafoil",
-    category: "Embedded Systems · Autonomous Flight",
-    image: "/parafoil.jpg",
-    description:
-      "A low-cost autonomous parafoil system designed to recover high-altitude payloads through GPS and IMU-based navigation, real-time state estimation, and servo-actuated brake control.",
-    technologies: [
-      "C",
-      "Python",
-      "STM32",
-      "FreeRTOS",
-      "GPS",
-      "IMU",
-      "EKF",
-      "XBee",
-    ],
-    highlights: [
-      "Designed and built an STM32-based airborne guidance unit",
-      "Implemented a custom Extended Kalman Filter for GPS and IMU fusion",
-      "Built a Python ground control station for live telemetry and tracking",
-    ],
-  },
-  {
-    title: "Autonomous Robot Laser Tag",
-    category: "Robotics · Communication Systems",
-    image: "/laser-tag.jpg",
-    description:
-      "A multi-robot laser-tag platform using ROS 2, Raspberry Pi computers, custom infrared hardware, autonomous navigation, and real-time hit detection.",
-    technologies: [
-      "C++",
-      "Python",
-      "ROS 2",
-      "Raspberry Pi",
-      "KiCad",
-      "LiDAR",
-    ],
-    highlights: [
-      "Designed a custom PCB with IR transmitters, receivers, and status LEDs",
-      "Created a 38 kHz communication protocol with checksum validation",
-      "Integrated communication hardware with ROS 2 navigation software",
-    ],
-  },
-  {
-    title: "Steel Slab Optimization",
-    category: "Industrial Software · Optimization",
-    image: "/steel-casting.jpg",
-    description:
-      "A production optimization system that analyzed daily casting schedules and identified compatible slab-width transitions to reduce waste and preserve customer orders.",
-    technologies: ["C", "JavaScript", "SQL", "Optimization", "Manufacturing"],
-    highlights: [
-      "Reduced monthly scrap by 60 tons",
-      "Prevented 220 tons per month from being downgraded",
-      "Kept 1,100 tons per month on original prime orders",
-    ],
-  },
-  {
-    title: "Autonomous Balloon Turret",
-    category: "Computer Vision · Embedded Control",
-    image: "/balloon-turret.jpg",
-    description:
-      "An autonomous targeting system combining computer vision, an STM32 controller, FPGA display hardware, and motor control to identify and engage balloon targets.",
-    technologies: [
-      "C",
-      "Python",
-      "Verilog",
-      "OpenCV",
-      "STM32",
-      "FPGA",
-    ],
-    highlights: [
-      "Used OpenCV to detect targets by HSV color classification",
-      "Developed custom FPGA VGA and LCD display drivers",
-      "Implemented PWM-based servo and stepper motor control",
-    ],
-  },
-];
+
 
 const experience = [
   {
@@ -384,59 +310,75 @@ export default function Home() {
 
           <div className="mt-14 grid gap-8 md:grid-cols-2">
             {projects.map((project) => (
-              <article
-                key={project.title}
-                className="project-card card overflow-hidden rounded-3xl"
+              <Link
+                key={project.slug}
+                href={`/projects/${project.slug}`}
+                className="project-card card group block overflow-hidden rounded-3xl focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-4"
               >
-                <div className="relative aspect-[16/9] overflow-hidden bg-slate-200">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    className="object-cover transition duration-500 hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
+                <article>
+                  <div className="relative aspect-[16/9] overflow-hidden bg-slate-200">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover transition duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/55 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/55 via-transparent to-transparent" />
 
-                  <p className="absolute bottom-5 left-5 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-slate-800 backdrop-blur">
-                    {project.category}
-                  </p>
-                </div>
-
-                <div className="p-7">
-                  <h3 className="text-2xl font-bold tracking-tight text-slate-950">
-                    {project.title}
-                  </h3>
-
-                  <p className="mt-4 leading-7 text-slate-600">
-                    {project.description}
-                  </p>
-
-                  <ul className="mt-6 space-y-3">
-                    {project.highlights.map((highlight) => (
-                      <li
-                        key={highlight}
-                        className="flex gap-3 text-sm leading-6 text-slate-700"
-                      >
-                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-600" />
-                        {highlight}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="mt-7 flex flex-wrap gap-2">
-                    {project.technologies.map((technology) => (
-                      <span
-                        key={technology}
-                        className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-600"
-                      >
-                        {technology}
-                      </span>
-                    ))}
+                    <p className="absolute bottom-5 left-5 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-slate-800 backdrop-blur">
+                      {project.category}
+                    </p>
                   </div>
-                </div>
-              </article>
+
+                  <div className="p-7">
+                    <div className="flex items-start justify-between gap-4">
+                      <h3 className="text-2xl font-bold tracking-tight text-slate-950 transition group-hover:text-blue-700">
+                        {project.title}
+                      </h3>
+
+                      <span
+                        aria-hidden="true"
+                        className="mt-1 text-xl text-slate-400 transition group-hover:translate-x-1 group-hover:text-blue-700"
+                      >
+                        →
+                      </span>
+                    </div>
+
+                    <p className="mt-4 leading-7 text-slate-600">
+                      {project.summary}
+                    </p>
+
+                    <ul className="mt-6 space-y-3">
+                      {project.highlights.slice(0, 3).map((highlight) => (
+                        <li
+                          key={highlight}
+                          className="flex gap-3 text-sm leading-6 text-slate-700"
+                        >
+                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-600" />
+                          {highlight}
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="mt-7 flex flex-wrap gap-2">
+                      {project.technologies.slice(0, 6).map((technology) => (
+                        <span
+                          key={technology}
+                          className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-600"
+                        >
+                          {technology}
+                        </span>
+                      ))}
+                    </div>
+
+                    <p className="mt-7 text-sm font-bold text-blue-700">
+                      View project details →
+                    </p>
+                  </div>
+                </article>
+              </Link>
             ))}
           </div>
 
